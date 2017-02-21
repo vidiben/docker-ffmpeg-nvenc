@@ -25,7 +25,7 @@ RUN  apt-get source libbluray \
   && cd /root \
   && rm -rf libbluray*
 
-RUN apt-get source apt-get source libx265-79 \
+RUN apt-get source libx265-79 \
   && cd x265*/build/linux \
   && cmake -G "Unix Makefiles" -DENABLE_SHARED:bool=off ../../source \
   && make \
