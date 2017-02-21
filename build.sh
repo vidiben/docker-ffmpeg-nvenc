@@ -5,21 +5,21 @@ set -ex
 NPROC="`grep -c ^processor /proc/cpuinfo`"
 
 cd /root
-7z x "$SDK_PATH"
+7z x -y "$SDK_PATH"
 cp *SDK*/Samples/common/inc/*.h /usr/local/include/
 
 cd /root/ffmpeg
 
-./configure \
-  --prefix=/usr \
+PATH="$HOME/bin:$PATH" PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./configure \
+  --prefix="$HOME/ffmpeg_build" \
   --pkg-config-flags="--static" \
-  --build-suffix=-ffmpeg \
-  --toolchain=hardened \
+  --extra-cflags="-I$HOME/ffmpeg_build/include" \
+  --extra-ldflags="-L$HOME/ffmpeg_build/lib" \
+  --bindir="$HOME/bin" \
   --enable-gpl \
   --enable-libass \
   --enable-libfdk-aac \
   --enable-vaapi \
-  --enable-libbluray \
   --enable-libfreetype \
   --enable-libmp3lame \
   --enable-libopus \

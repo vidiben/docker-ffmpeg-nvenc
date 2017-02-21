@@ -12,55 +12,53 @@ RUN  echo "deb http://archive.ubuntu.com/ubuntu/ xenial multiverse" > /etc/apt/s
       cmake \
       curl \
       libfdk-aac-dev \
+      libtool \
       libxml2-dev \
+      mercurial \
       p7zip-full \
   && apt-get build-dep -y \
-      ffmpeg 
+      ffmpeg \
+  && mkdir -p "$HOME/bin" "$HOME/ffmpeg_build" "$HOME/ffmpeg_sources"
 
-RUN  apt-get source libbluray \
-  && cd libbluray* \
-  && ./configure --disable-shared \
+RUN  curl -SL -o fdk-aac.tar.gz https://github.com/mstorsjo/fdk-aac/tarball/master \
+  && tar xzvf fdk-aac.tar.gz \
+  && cd mstorsjo-fdk-aac* \
+  && autoreconf -fiv \
+  && ./configure --prefix="$HOME/ffmpeg_build" --disable-shared \
   && make \
   && make install \
   && cd /root \
-  && rm -rf libbluray*
-
-RUN  apt-get source libfdk-aac0 \
-  && cd fdk-aac* \
-  && ./configure --disable-shared \
-  && make \
-  && make install \
-  && cd /root \
-  && rm -rf fdk*
+  && rm -rf mstorsjo*
 
 RUN  apt-get source libmp3lame0 \
   && cd lame* \
-  && ./configure --enable-nasm --disable-shared \
+  && ./configure --prefix="$HOME/ffmpeg_build" --enable-nasm --disable-shared \
   && make \
   && make install \
   && cd /root \
   && rm -rf lame*
 
-RUN  apt-get source libx264-148 \
-  && cd x264* \
-  && ./configure --enable-static \
-  && make \
+RUN  curl -SLO http://download.videolan.org/pub/x264/snapshots/last_x264.tar.bz2 \
+  && tar xjvf last_x264.tar.bz2 \
+  && cd x264-snapshot* \
+  && PATH="$HOME/bin:$PATH" ./configure --prefix="$HOME/ffmpeg_build" --bindir="$HOME/bin" --enable-static --disable-opencl \
+  && PATH="$HOME/bin:$PATH" make \
   && make install \
   && cd /root \
-  éé rm -rf x264*
+  && rm -rf x264*
 
-RUN  apt-get source libx265-79 \
-  && cd x265*/build/linux \
-  && cmake -G "Unix Makefiles" -DENABLE_SHARED:bool=off ../../source \
+RUN  hg clone https://bitbucket.org/multicoreware/x265 \
+  && cd x265/build/linux \
+  && PATH="$HOME/bin:$PATH" cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$HOME/ffmpeg_build" -DENABLE_SHARED:bool=off ../../source \
   && make \
   && make install \
   && cd /root \
-  && rm -rf x265*
+  && rm -rf x265
 
 RUN  curl -SLO http://downloads.xiph.org/releases/opus/opus-1.1.4.tar.gz \
   && tar xzvf opus-1.1.4.tar.gz \
   && cd opus-1.1.4 \
-  && ./configure --disable-shared \
+  && ./configure --prefix="$HOME/ffmpeg_build" --disable-shared \
   && make \
   && make install \
   && cd /root \
@@ -69,8 +67,8 @@ RUN  curl -SLO http://downloads.xiph.org/releases/opus/opus-1.1.4.tar.gz \
 RUN  curl -SLO http://storage.googleapis.com/downloads.webmproject.org/releases/webm/libvpx-1.6.1.tar.bz2 \
   && tar xjvf libvpx-1.6.1.tar.bz2 \
   && cd libvpx-1.6.1 \
-  && ./configure --prefix=/usr/local --disable-examples --disable-unit-tests \
-  && make \
+  && PATH="$HOME/bin:$PATH" ./configure --prefix="$HOME/ffmpeg_build" --disable-examples --disable-unit-tests \
+  && PATH="$HOME/bin:$PATH" make \
   && make install \
   && cd /root \
   && rm -rf libvpx*
