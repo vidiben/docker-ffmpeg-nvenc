@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -ex
+
 cd /root
 7z x "$SDK_PATH"
 cp *SDK*/Samples/common/inc/*.h /usr/local/include/

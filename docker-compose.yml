@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+  ffmpeg:
+    build: .
+    volumes:
+      - ./Video_Codec_SDK_7.1.9.zip:/tmp/sdk.zip
+    environment:
+      SDK_PATH: /tmp/sdk.zip
+    
