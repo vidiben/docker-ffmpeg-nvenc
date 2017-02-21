@@ -2,7 +2,7 @@ version: '2'
 
 services:
   ffmpeg:
-    build: .
+    image: vidiben/ffmpeg-nvenc
     volumes:
       - ./Video_Codec_SDK_7.1.9.zip:/tmp/sdk.zip
     environment:

@@ -2,7 +2,6 @@ FROM ubuntu:xenial
 MAINTAINER Benoît Vidis <contact@benoitvidis.com>
 
 WORKDIR /root
-COPY build.sh /root/
 RUN  echo "deb http://archive.ubuntu.com/ubuntu/ xenial multiverse" > /etc/apt/sources.list.d/multiverse.list \
   && apt-get update \
   && apt-get install -y \
@@ -33,5 +32,6 @@ RUN apt-get source libx265-79 \
   && cd /root \
   && rm -rf x265*
 
+COPY build.sh /root/
 CMD ["/root/build.sh"]
 
