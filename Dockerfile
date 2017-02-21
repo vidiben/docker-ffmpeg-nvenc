@@ -67,6 +67,15 @@ RUN  curl -SLO http://downloads.xiph.org/releases/opus/opus-1.1.4.tar.gz \
   && cd /root \
   && rm -rf opus*
 
+RUN  curl -SLO http://storage.googleapis.com/downloads.webmproject.org/releases/webm/libvpx-1.6.1.tar.bz2 \
+  && tar xjvf libvpx-1.6.1.tar.bz2 \
+  && cd libvpx-1.6.1 \
+  && ./configure --prefix=/usr/local --disable-examples --disable-unit-tests \
+  && make \
+  && make install \
+  && cd /root \
+  && rm -rf libvpx*
+
 COPY build.sh /root/
 CMD ["/root/build.sh"]
 
