@@ -74,5 +74,13 @@ cd /root/ffmpeg-2.8.11
 make
 make install
 
+for i in {0..5}; do echo; done
+echo "Build done"
+echo "You can now get ffmpeg binary from /usr/bin/ffmpeg"
+echo
+echo "ex: docker cp <container id>:/usr/bin/ffmpeg ~/bin/ffmpeg"
+echo
+
+
 exec tail -f /dev/null
 
