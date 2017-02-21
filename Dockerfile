@@ -8,14 +8,13 @@ RUN  echo "deb http://archive.ubuntu.com/ubuntu/ xenial multiverse" > /etc/apt/s
   && apt-get install -y \
       ant \
       autoconf \
+      bzip2 \
       cmake \
       curl \
       libfdk-aac-dev \
       libxml2-dev \
       p7zip-full \
   && apt-get build-dep -y \
-      ffmpeg \
-  && apt-get source \
       ffmpeg 
 
 RUN  apt-get source libbluray \
@@ -75,6 +74,9 @@ RUN  curl -SLO http://storage.googleapis.com/downloads.webmproject.org/releases/
   && make install \
   && cd /root \
   && rm -rf libvpx*
+
+RUN  curl -SLO http://ffmpeg.org/releases/ffmpeg-snapshot.tar.bz2 \
+  && tar xvf ffmpeg-snapshot.tar.bz2 
 
 COPY build.sh /root/
 CMD ["/root/build.sh"]
