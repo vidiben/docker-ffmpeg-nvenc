@@ -2,6 +2,8 @@
 
 set -ex
 
+NPROC="`grep -c ^processor /proc/cpuinfo`"
+
 cd /root
 7z x "$SDK_PATH"
 cp *SDK*/Samples/common/inc/*.h /usr/local/include/
@@ -25,13 +27,15 @@ cd /root/ffmpeg
   --enable-libvorbis \
   --enable-libvpx \
   --enable-libx264 \
+  --enable-libx265 \
   --enable-nonfree \
   --enable-nvenc
   
-make
+make -j$NPROC
 make install
 
-for i in {0..5}; do echo; done
+echo
+echo
 echo "Build done"
 echo "You can now get ffmpeg binary from /usr/bin/ffmpeg"
 echo
