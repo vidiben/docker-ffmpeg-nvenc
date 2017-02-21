@@ -1,11 +1,16 @@
-FROM debian:jessie
+FROM ubuntu:xenial
 MAINTAINER Benoît Vidis <contact@benoitvidis.com>
 
-RUN  apt-get update \
+WORKDIR /root
+COPY build.sh /root/
+RUN  echo "deb http://archive.ubuntu.com/ubuntu/ xenial multiverse" > /etc/apt/sources.list.d/multiverse.list \
+  && apt-get update \
   && apt-get install -y \
-      build-essential \
-      curl \
-      sudo \
-      wget \
-  && curl -o build.sh -SL https://gist.githubusercontent.com/Brainiarc7/3f7695ac2a0905b05c5b/raw/dedfb86452070f80391468510639d6f2455b8e49/compile-ffmpeg-nvenc.sh \
-  && sh ./build.sh
+      libfdk-aac-dev \
+      p7zip-full \
+  && apt-get build-dep -y \
+      ffmpeg \
+  && apt-get source ffmpeg
+
+CMD ["/root/build.sh"]
+
