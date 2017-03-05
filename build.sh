@@ -41,9 +41,9 @@ make install
 echo
 echo
 echo "Build done"
-echo "You can now get ffmpeg binary from /usr/bin/ffmpeg"
+echo "You can now get ffmpeg binary from /root/ffmpeg/ffmpeg"
 echo
-echo "ex: docker cp <container id>:/usr/bin/ffmpeg ~/bin/ffmpeg"
+echo "ex: docker cp <container id>:/root/ffmpeg/ffmpeg ~/bin/ffmpeg"
 echo
 
 
