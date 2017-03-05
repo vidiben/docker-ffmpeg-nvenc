@@ -13,8 +13,8 @@ cd /root/ffmpeg
 PATH="$HOME/bin:$PATH" PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./configure \
   --prefix="$HOME/ffmpeg_build" \
   --pkg-config-flags="--static" \
-  --extra-cflags="-I$HOME/ffmpeg_build/include" \
-  --extra-ldflags="-L$HOME/ffmpeg_build/lib" \
+  --extra-cflags="-I$HOME/ffmpeg_build/include -static" \
+  --extra-ldflags="-L$HOME/ffmpeg_build/lib -static" \
   --bindir="$HOME/bin" \
   --enable-gpl \
   --enable-libass \
@@ -29,7 +29,11 @@ PATH="$HOME/bin:$PATH" PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./conf
   --enable-libx264 \
   --enable-libx265 \
   --enable-nonfree \
-  --enable-nvenc
+  --enable-nvenc \
+  --enable-static \
+  --disable-ffplay \
+  --disable-ffserver \
+  --disable-shared
   
 make -j$NPROC
 make install

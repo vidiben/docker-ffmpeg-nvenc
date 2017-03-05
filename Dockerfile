@@ -8,16 +8,24 @@ RUN  echo "deb http://archive.ubuntu.com/ubuntu/ xenial multiverse" > /etc/apt/s
   && apt-get install -y \
       ant \
       autoconf \
+      automake \
+      build-essential \
       bzip2 \
       cmake \
       curl \
       libfdk-aac-dev \
+      libfreetype6-dev \
+      libsass-dev \
+      libtheora-dev \
       libtool \
+      libvorbis-dev \
       libxml2-dev \
       mercurial \
-      p7zip-full \
-  && apt-get build-dep -y \
-      ffmpeg \
+      p7zip \
+      pkg-config \
+      texinfo \
+      zlib1g-dev \
+      yasm \
   && mkdir -p "$HOME/bin" "$HOME/ffmpeg_build" "$HOME/ffmpeg_sources"
 
 RUN  curl -SL -o fdk-aac.tar.gz https://github.com/mstorsjo/fdk-aac/tarball/master \
