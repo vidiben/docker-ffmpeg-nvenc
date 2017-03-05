@@ -3,6 +3,7 @@ version: '2'
 services:
   ffmpeg:
     image: vidiben/ffmpeg-nvenc
+    command: tail -f /dev/null
     volumes:
       - ./Video_Codec_SDK_7.1.9.zip:/tmp/sdk.zip
     environment:

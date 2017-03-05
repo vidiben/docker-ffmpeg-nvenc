@@ -15,9 +15,11 @@ RUN  echo "deb http://archive.ubuntu.com/ubuntu/ xenial multiverse" > /etc/apt/s
       curl \
       libfdk-aac-dev \
       libfreetype6-dev \
-      libsass-dev \
+      libass-dev \
       libtheora-dev \
       libtool \
+      libva-dev \
+      libvdpau-dev \
       libvorbis-dev \
       libxml2-dev \
       mercurial \
