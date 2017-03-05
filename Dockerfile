@@ -19,7 +19,6 @@ RUN  echo "deb http://archive.ubuntu.com/ubuntu/ xenial multiverse" > /etc/apt/s
       libtheora-dev \
       libtool \
       libva-dev \
-      libvdpau-dev \
       libvorbis-dev \
       libxml2-dev \
       mercurial \
@@ -82,6 +81,31 @@ RUN  curl -SLO http://storage.googleapis.com/downloads.webmproject.org/releases/
   && make install \
   && cd /root \
   && rm -rf libvpx*
+
+RUN  apt-get source libfribidi0 \
+  && cd fribidi-0.19.7 \
+  && ./configure --prefix="$HOME/ffmpeg_build" --disable-shared \
+  && make \
+  && make install \
+  && cd /root \
+  && rm -rf fribidi*
+
+RUN  curl -SLO https://github.com/libass/libass/releases/download/0.13.6/libass-0.13.6.tar.gz \
+  && tar xvf libass-0.13.6.tar.gz \
+  && cd libass-0.13.6 \
+  && ./configure --prefix="$HOME/ffmpeg_build" --disable-shared \
+  && make \
+  && make install \
+  && cd /root \
+  && rm -rf libass*
+
+RUN  apt-get source libharfbuzz0 \
+  && cd harfbuzz-1.0.1 \
+  && ./configure --prefix="$HOME/ffmpeg_build" --disable-shared --enable-static \
+  && make \
+  && make install \
+  && cd /root \
+  && rm -rf harfbuzz*
 
 RUN  curl -SLO http://ffmpeg.org/releases/ffmpeg-snapshot.tar.bz2 \
   && tar xvf ffmpeg-snapshot.tar.bz2 
