@@ -21,7 +21,7 @@ RUN  echo "deb http://archive.ubuntu.com/ubuntu/ xenial multiverse" > /etc/apt/s
       libvorbis-dev \
       libxml2-dev \
       mercurial \
-      p7zip \
+      p7zip-full \
       pkg-config \
       texinfo \
       zlib1g-dev \
