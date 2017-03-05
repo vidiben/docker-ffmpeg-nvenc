@@ -90,7 +90,7 @@ RUN  apt-get source libfribidi0 \
   && cd /root \
   && rm -rf fribidi*
 
-RUN  apt-get source libharfbuzz0 \
+RUN  apt-get source libharfbuzz0b \
   && cd harfbuzz-1.0.1 \
   && ./configure --prefix="$HOME/ffmpeg_build" --disable-shared --enable-static \
   && make \
