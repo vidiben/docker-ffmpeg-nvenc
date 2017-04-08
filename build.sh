@@ -6,7 +6,9 @@ NPROC="`grep -c ^processor /proc/cpuinfo`"
 
 cd /root
 7z x -y "$SDK_PATH"
-cp *SDK*/Samples/common/inc/*.h /usr/local/include/
+mv *SDK* nv_sdk
+cp nv_sdk/Samples/common/inc/*.h /usr/local/include/
+cp -r nv_sdk/Samples/common/inc/GL /usr/local/include/
 
 cd /root/ffmpeg
 
@@ -15,7 +17,10 @@ PATH="$HOME/bin:$PATH" PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./conf
   --pkg-config-flags="--static" \
   --extra-cflags="-I$HOME/ffmpeg_build/include -static" \
   --extra-ldflags="-L$HOME/ffmpeg_build/lib -static" \
+  --extra-cflags="-I../nv_sdk" \
+  --extra-ldflags="-L../nv_sdk" \
   --bindir="$HOME/bin" \
+  --enable-debug \
   --enable-gpl \
   --enable-libass \
   --enable-libfdk-aac \
